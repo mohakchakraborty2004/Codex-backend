@@ -12,3 +12,60 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum result {
+ Accepted
+ Failed
+ TLE
+}
+
+model User {
+  id String @unique @default(cuid())
+  username String @unique
+  password String
+  email String
+
+  submissions Submissions[]
+  contests Contests[]
+}
+
+model Contests {
+  id String @unique @default(cuid())
+  creatorId String //relation to user
+  title String 
+  description String
+  sampleTest Json 
+  hiddenTest Json
+  timeLimit Int
+  memoryLimit Int
+
+  submissions Submissions[]
+  
+  //to add : 
+  // start time ,  end time
+
+  // add relation user here
+  creators User @relation(fields: [creatorId], references: [id])
+  
+}
+
+model Submissions {
+  id String @unique @default(cuid())
+  contestId String //relation to contest
+  userId String  // relation to user
+  code String 
+  testCases_P Int
+  executionTime Int
+  memoryUsed Int
+  status result
+
+  // add relation here
+  user User @relation( fields: [userId], references: [id])
+  contest Contests @relation(fields: [contestId], references: [id])
+}
+
+//to add models : 
+
+//ranking model 
+// staking model 
+

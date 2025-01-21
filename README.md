@@ -1,7 +1,7 @@
-# CipherBase System Design Documentation
+# Codex System Design Documentation
 
 ## Introduction
-This document outlines proposed system designs for the CipherBase platform. Its divided into two parts
+This document outlines proposed system designs for the Codex platform. Its divided into two parts.
 
 ---
 
@@ -14,7 +14,7 @@ This document outlines proposed system designs for the CipherBase platform. Its 
   3. Cheating prevention mechanisms, such as tab-switch detection.
 
 #### **Diagram**
-![System Design - Part 1](probSetterDesign.png)
+![System Design - Part 1](/public/probSetterDesign.png)
 
 ---
 
@@ -27,4 +27,4 @@ This document outlines proposed system designs for the CipherBase platform. Its 
   3. Rankings and winners are finalized 24 hours after contest end.
 
 #### **Diagram**
-![System Design - Part 2](systemDesign.png)
+![System Design - Part 2](/public/systemDesign.png)

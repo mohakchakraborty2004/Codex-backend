@@ -20,10 +20,10 @@ enum result {
 }
 
 model User {
-  id String @unique @default(cuid())
+  id       String @unique @default(cuid())
   username String @unique
   password String
-  email String
+  email    String
 
   submissions Submissions[]
   contests Contests[]

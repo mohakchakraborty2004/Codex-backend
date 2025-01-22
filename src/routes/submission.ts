@@ -9,16 +9,20 @@ const solValidation = async(submittedCode: string, LangId: number, testcases: an
     const endpoint = 'https://ce.judge0.com/submissions/?base64_encoded=false&wait=false';
     const APIkey = "API"; //env
 
-    const testResult = [];
-    let solved: string ;
+    //combined the test-cases
 
-// included the callback logic as well.
-    for (const testCase of testcases) {
-        const data = {
+    //@ts-ignore
+    const inputs = testcases.map(tc => tc.stdin).join('\n');
+    //@ts-ignore
+    const outputs = testcases.map(tc => tc.expectedOutput).join('\n');
+
+
+    const data = {
             source_code : submittedCode,
             language_id : LangId,
-            stdin: testCase.input,
-            expected_output : testCase.expected_output
+            stdin: inputs,
+            expected_output : outputs,
+            callback_url : "callback" // callback url 
         }; 
 
         try {
@@ -29,36 +33,20 @@ const solValidation = async(submittedCode: string, LangId: number, testcases: an
                     'X-Auth-Token': APIkey
                 }
             })
-    
-            const status : any = response.data; //better type ?
 
-            if(status.id === 3) {
-                testResult.push({
-                    passed : "yes"
-                })
-               console.log("test passed")
-            }else {
-             solved = "failed";
-             return solved;
-            }
+            console.log("sent to callback");
+            console.log(response.data);
+            
 
         } catch (error) {
             console.log(error);
             console.log("error occured");
         }
 
-    }
-
-    solved =  "Accepted";
-    return solved; 
-
-   
-    // iterate through test cases
-    // for each test case get the result
-    // if all passed set a variable status to passed
-    // if either fails set the variable to failed
-
 }
+
+
+//---------------------------------------route ---------------------------------------------
 
 
 SubRouter.post("/submit", async(req: any, res: any)=> {
@@ -67,10 +55,13 @@ SubRouter.post("/submit", async(req: any, res: any)=> {
     const testcases = req.body.testcases;
 
     try {
-        
+
         const response = await solValidation(submittedCode, LangId, testcases);
-        await axios.post("CALLBACK URL", response);
-        console.log("submission sent to callback");
+        console.log("response sent from the route ")
+
+        return res.status(200).json({
+            msg : "solved"
+        });
 
     } catch (error) {
         console.log(error);

@@ -50,7 +50,7 @@ model Contests {
 }
 
 model Submissions {
-  id String @unique @default(cuid())
+  id String @unique 
   contestId String //relation to contest
   userId String  // relation to user
   code String 

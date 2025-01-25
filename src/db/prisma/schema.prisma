@@ -23,7 +23,7 @@ model User {
   id       String @unique @default(cuid())
   username String @unique
   password String
-  email    String
+  email    String @unique
 
   submissions Submissions[]
   contests Contests[]

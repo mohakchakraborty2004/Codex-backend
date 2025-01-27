@@ -13,11 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum result {
- Accepted
- Failed
- TLE
-}
 
 model User {
   id       String @unique @default(cuid())
@@ -57,7 +52,7 @@ model Submissions {
   testCases_P Int
   executionTime Int
   memoryUsed Int
-  status result
+  status String
 
   // add relation here
   user User @relation( fields: [userId], references: [id])

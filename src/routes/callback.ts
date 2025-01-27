@@ -15,9 +15,15 @@ callbackRouter.post("/callback/:userId/:contestId", async(req: any, res: any) =>
         //logic to check all the testcases are passed or not. 
         //then update the data Base
 
+        if(!submission){
+            return res.status(404).json({
+                msg : "submission not recieved"
+            })
+        }
+
     
         const response = await prisma.submissions.create({
-            //@ts-ignore
+            
             data : {
                 id : token,
                 userId : userId,
@@ -25,6 +31,8 @@ callbackRouter.post("/callback/:userId/:contestId", async(req: any, res: any) =>
                 executionTime : time,
                 memoryUsed : memory,
                 code : source_code,
+                testCases_P : status, //needs to be changed
+                status : status.id // needs to be changed
             }
         })
     } catch (error) {

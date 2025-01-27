@@ -4,6 +4,7 @@ import  express  from "express";
 import prisma from "../db";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { SubRouter } from "./submission";
 
 dotenv.config();
 
@@ -97,6 +98,7 @@ try {
 }
 })
 
+router.use("submission", SubRouter);
 
  
 

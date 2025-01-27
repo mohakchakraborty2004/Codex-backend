@@ -11,10 +11,9 @@ const solValidation = async(submittedCode: string, LangId: number, testcases: an
 
     //combined the test-cases
 
-    //@ts-ignore
-    const inputs = testcases.map(tc => tc.stdin).join('\n');
-    //@ts-ignore
-    const outputs = testcases.map(tc => tc.expectedOutput).join('\n');
+   
+    const inputs = testcases.map((tc : any) => tc.stdin).join('\n');
+    const outputs = testcases.map((tc: any) => tc.expectedOutput).join('\n');
 
 
     const data = {
@@ -62,7 +61,8 @@ SubRouter.post("/submit", async(req: any, res: any)=> {
         console.log("response sent from the route ")
 
         return res.status(200).json({
-            msg : "solved"
+            msg : "solved",
+            response
         });
 
     } catch (error) {
